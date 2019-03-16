@@ -5,6 +5,19 @@ exports.test = function (req, res) {
     res.send('Greetings from the Test controller!');
 };
 
+exports.list = function (req, res) {
+    Product.find(function (err, data) {
+        if (err) {
+            res.json({
+                status: "error",
+                message: err,
+            });
+        }
+        res.json(data);
+    });
+};
+
+
 exports.product_create = function (req, res) {
     let product = new Product(
         {
