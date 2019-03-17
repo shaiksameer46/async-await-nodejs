@@ -1,0 +1,33 @@
+****************************************************************************************************************************************
+error during function valid in models , exported , try catch blocks scenario
+
+(node:10164) UnhandledPromiseRejectionWarning: ValidationError: product validation failed: oem: Path oem is required., category: Path category is required. at new ValidationError (C:\Projects\React\ninjas\neo\node_modules\mongoose\lib\error\validation.js:30:11) at model.Document.invalidate (C:\Projects\React\ninjas\neo\node_modules\mongoose\lib\document.js:1957:32) at p.doValidate.skipSchemaValidators (C:\Projects\React\ninjas\neo\node_modules\mongoose\lib\document.js:1825:17) at C:\Projects\React\ninjas\neo\node_modules\mongoose\lib\schematype.js:839:9 at _combinedTickCallback (internal/process/next_tick.js:131:7) at process._tickCallback (internal/process/next_tick.js:180:9) (node:10164) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 1) (node:10164) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
+
+****************************************************************************************************************************************
+after placing in controller.js we got below error  ---> while passing req.body into function at bottom
+
+SyntaxError: Identifier 'valid' has already been declared
+***************************************************************************************************************************************
+for product_details   ---> get function when other parameters are passed we get below error
+
+(node:8528) UnhandledPromiseRejectionWarning: CastError: Cast to ObjectId failed for value "5c8e65e5d4058c21508e89ci" at path "_id" for model "Data"
+    at new CastError (F:\First Api\node_modules\mongoose\lib\error\cast.js:29:11)
+    at ObjectId.cast (F:\First Api\node_modules\mongoose\lib\schema\objectid.js:242:11)
+    at ObjectId.SchemaType.applySetters (F:\First Api\node_modules\mongoose\lib\schematype.js:849:12)
+    at ObjectId.SchemaType._castForQuery (F:\First Api\node_modules\mongoose\lib\schematype.js:1252:15)
+    at ObjectId.SchemaType.castForQuery (F:\First Api\node_modules\mongoose\lib\schematype.js:1242:15)
+    at ObjectId.SchemaType.castForQueryWrapper (F:\First Api\node_modules\mongoose\lib\schematype.js:1221:15)
+    at cast (F:\First Api\node_modules\mongoose\lib\cast.js:307:32)
+    at model.Query.Query.cast (F:\First Api\node_modules\mongoose\lib\query.js:4340:12)
+    at model.Query.Query._castConditions (F:\First Api\node_modules\mongoose\lib\query.js:1723:10)
+    at model.Query.<anonymous> (F:\First Api\node_modules\mongoose\lib\query.js:1976:8)
+    at model.Query._wrappedThunk [as _findOne] (F:\First Api\node_modules\mongoose\lib\helpers\query\wrapThunk.js:16:8)
+    at process.nextTick (F:\First Api\node_modules\kareem\index.js:369:33)
+    at process._tickCallback (internal/process/next_tick.js:61:11)
+(node:8528) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 1)
+(node:8528) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
+****************************************************************************************************************************************
+
+
+
+
