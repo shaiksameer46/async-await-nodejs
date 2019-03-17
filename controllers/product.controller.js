@@ -1,56 +1,75 @@
+const joi = require('joi');
 const Product = require('../models/product.model');
 
-//Simple version, without validation or sanitation
-exports.test = function (req, res) {
+async function test(req, res) {
     res.send('Greetings from the Test controller!');
-};
+}
 
-exports.list = function (req, res) {
-    Product.find(function (err, data) {
-        if (err) {
-            res.json({
-                status: "error",
-                message: err,
-            });
-        }
-        res.json(data);
-    });
-};
+async function list(req, res) {
+  const data = await Product.find();
+  res.json(data);
+}
 
+async function product_create(req,res){
 
-exports.product_create = function (req, res) {
-    let product = new Product(
+    const joiSchema = joi.object().keys({
+        name: joi.string().required().error(new Error('please enter correct name')),
+        price: joi.number().integer().min(60).required().error(new Error('please give valid price'))
+      });
+      console.log("hi");  
+    const x = joi.validate(req.body, joiSchema); 
+
+    if(!x)       
+    {
+      console.log("bug");
+      res.status(404).send("joi error found");
+      return next();
+    }
+
+   let product = new Product(
         {
             name: req.body.name,
             price: req.body.price
         }
     );
+     console.log('bye');
+    data = await product.save();
+    res.send(data);
+}
 
-    product.save(function (err,data) {
-        if (err) {
-            return next(err);
+async function product_details(req, res ,next) {
+    product = await Product.findById(req.params.id);
+    if(!product){
+    res.status(400).send("please give correct id");
+    console.log('id not found in data base');
+     return next();
+    }
+    res.send("product details" + product);
+ }
+
+async function product_update(req,res){
+    product = await Product.findByIdAndUpdate(req.params.id, {$set: req.body})
+    if(!product){
+        res.status(400).send("please give correct id");
+        console.log('id not found in data base');
+         return next();
         }
-        res.send(data)
-    })
-};
+    res.send("product updated\n\n" + product);
+    }
 
-exports.product_details = function (req, res) {
-    Product.findById(req.params.id, function (err, product) {
-        if (err) return next(err);
-        res.send(product);
-    })
-};
+async function product_delete(req,res){
+    product = await Product.findByIdAndRemove(req.params.id);
+    if(!product){
+        res.status(400).send("please give correct id");
+        console.log('id not found in data base');
+         return next();
+        }
+    res.send("product deleted\n\n" + product);
+    }
 
-exports.product_update = function (req, res) {
-    Product.findByIdAndUpdate(req.params.id, {$set: req.body}, function (err, data) {
-        if (err) return next(err);
-        res.send('Product udpated.'+ data);
-    });
-};
-
-exports.product_delete = function (req, res) {
-    Product.findByIdAndRemove(req.params.id, function (err, product) {
-        if (err) return next(err);
-        res.send('Deleted successfully!' + product);
-    })
-};
+exports.test = test;
+exports.list = list;
+exports.product_delete = product_delete;
+exports.product_details = product_details;
+exports.product_update = product_update;
+exports.product_create = product_create;
