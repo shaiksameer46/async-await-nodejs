@@ -11,15 +11,15 @@ async function list(req, res) {
 }
 
 async function product_create(req,res){
-
+    try{
     const joiSchema = joi.object().keys({
         name: joi.string().required().error(new Error('please enter correct name')),
         price: joi.number().integer().min(60).required().error(new Error('please give valid price'))
       });
       console.log("hi");  
-    const x = joi.validate(req.body, joiSchema); 
-
-    if(!x)       
+    joi.validate(req.body, joiSchema); 
+    }
+   catch(error)       
     {
       console.log("bug");
       res.status(404).send("joi error found");
